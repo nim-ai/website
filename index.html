@@ -37,7 +37,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 0;
         }
 
         /* Perspective grid canvas */
@@ -47,8 +47,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            opacity: 0.3;
+            z-index: 1;
+            opacity: 0.08;
         }
 
         /* The sacred text container */
@@ -65,8 +65,9 @@
         #nim-logo {
             width: clamp(200px, 50vw, 600px);
             height: auto;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))
-                    drop-shadow(0 0 40px rgba(139, 0, 255, 0.2));
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8))
+                    drop-shadow(0 0 30px rgba(0, 255, 255, 0.4))
+                    drop-shadow(0 0 60px rgba(0, 255, 255, 0.2));
             animation: nim-breathe 6s ease-in-out infinite;
         }
 
@@ -94,51 +95,25 @@
         }
 
         #glitch-cyan {
-            animation: glitch-1 4s ease-in-out infinite;
-        }
-
-        #glitch-magenta {
-            animation: glitch-2 4s ease-in-out infinite;
+            animation: glitch-1 5s ease-in-out infinite;
         }
 
         @keyframes glitch-1 {
-            0%, 88%, 100% {
+            0%, 92%, 100% {
                 opacity: 0;
                 transform: translate(-50%, -50%);
             }
-            90% {
-                opacity: 0.8;
-                transform: translate(calc(-50% - 8px), calc(-50% - 3px));
-            }
-            92% {
-                opacity: 0;
-                transform: translate(calc(-50% + 6px), calc(-50% + 2px));
-            }
             94% {
-                opacity: 0.6;
-                transform: translate(calc(-50% - 4px), calc(-50% + 1px));
+                opacity: 0.4;
+                transform: translate(calc(-50% - 4px), calc(-50% - 2px));
             }
             96% {
                 opacity: 0;
+                transform: translate(calc(-50% + 3px), calc(-50% + 1px));
             }
-        }
-
-        @keyframes glitch-2 {
-            0%, 89%, 100% {
-                opacity: 0;
-                transform: translate(-50%, -50%);
-            }
-            91% {
-                opacity: 0.6;
-                transform: translate(calc(-50% + 5px), calc(-50% + 2px));
-            }
-            93% {
-                opacity: 0.8;
-                transform: translate(calc(-50% - 6px), calc(-50% - 2px));
-            }
-            95% {
-                opacity: 0;
-                transform: translate(calc(-50% + 3px), calc(-50% - 1px));
+            98% {
+                opacity: 0.3;
+                transform: translate(calc(-50% - 2px), calc(-50% + 1px));
             }
         }
 
@@ -275,17 +250,8 @@
         <div id="light-leak"></div>
         <div id="pulse-ring"></div>
         <div id="nim-container">
-            <!-- NIM Logo - Wide, elegant strokes -->
+            <!-- NIM Logo - Teal with glow -->
             <svg id="nim-logo" viewBox="0 0 212 50" xmlns="http://www.w3.org/2000/svg">
-                <g fill="#ffffff">
-                    <path d="M 0 50 L 0 0 L 14 0 L 14 32 L 52 0 L 68 0 L 68 50 L 54 50 L 54 18 L 16 50 Z"/>
-                    <path d="M 96 50 L 96 0 L 110 0 L 110 50 Z"/>
-                    <path d="M 138 50 L 138 0 L 154 0 L 175 28 L 196 0 L 212 0 L 212 50 L 198 50 L 198 20 L 182 42 L 168 42 L 152 20 L 152 50 Z"/>
-                </g>
-            </svg>
-
-            <!-- Glitch layers -->
-            <svg class="glitch-layer" id="glitch-cyan" viewBox="0 0 212 50" xmlns="http://www.w3.org/2000/svg">
                 <g fill="#00ffff">
                     <path d="M 0 50 L 0 0 L 14 0 L 14 32 L 52 0 L 68 0 L 68 50 L 54 50 L 54 18 L 16 50 Z"/>
                     <path d="M 96 50 L 96 0 L 110 0 L 110 50 Z"/>
@@ -293,8 +259,9 @@
                 </g>
             </svg>
 
-            <svg class="glitch-layer" id="glitch-magenta" viewBox="0 0 212 50" xmlns="http://www.w3.org/2000/svg">
-                <g fill="#ff00ff">
+            <!-- Glitch layer -->
+            <svg class="glitch-layer" id="glitch-cyan" viewBox="0 0 212 50" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#00ffff">
                     <path d="M 0 50 L 0 0 L 14 0 L 14 32 L 52 0 L 68 0 L 68 50 L 54 50 L 54 18 L 16 50 Z"/>
                     <path d="M 96 50 L 96 0 L 110 0 L 110 50 Z"/>
                     <path d="M 138 50 L 138 0 L 154 0 L 175 28 L 196 0 L 212 0 L 212 50 L 198 50 L 198 20 L 182 42 L 168 42 L 152 20 L 152 50 Z"/>
@@ -748,7 +715,7 @@
                 time++;
 
                 // Clear neural canvas with slight trail effect
-                neuralCtx.fillStyle = 'rgba(10, 10, 15, 0.1)';
+                neuralCtx.fillStyle = 'rgba(10, 10, 15, 0.05)';
                 neuralCtx.fillRect(0, 0, neuralCanvas.width, neuralCanvas.height);
 
                 // Draw grid
