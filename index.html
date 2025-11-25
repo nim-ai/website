@@ -65,26 +65,19 @@
         #nim-logo {
             width: clamp(200px, 50vw, 600px);
             height: auto;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))
-                    drop-shadow(0 0 20px rgba(255, 0, 255, 0.3))
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3))
                     drop-shadow(0 0 40px rgba(139, 0, 255, 0.2));
-            animation: nim-breathe 4s ease-in-out infinite;
+            animation: nim-breathe 6s ease-in-out infinite;
         }
 
         @keyframes nim-breathe {
             0%, 100% {
-                opacity: 0.9;
+                opacity: 0.85;
                 transform: scale(1);
-                filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))
-                        drop-shadow(0 0 20px rgba(255, 0, 255, 0.3))
-                        drop-shadow(0 0 40px rgba(139, 0, 255, 0.2));
             }
             50% {
                 opacity: 1;
-                transform: scale(1.02);
-                filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.7))
-                        drop-shadow(0 0 30px rgba(255, 0, 255, 0.5))
-                        drop-shadow(0 0 60px rgba(139, 0, 255, 0.3));
+                transform: scale(1.01);
             }
         }
 
@@ -282,99 +275,32 @@
         <div id="light-leak"></div>
         <div id="pulse-ring"></div>
         <div id="nim-container">
-            <!-- Main NIM Logo - NASA/DMC inspired geometric wordmark -->
-            <svg id="nim-logo" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Chrome gradient for main logo -->
-                    <linearGradient id="chrome" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="20%" stop-color="#c0c0c0"/>
-                        <stop offset="40%" stop-color="#ffffff"/>
-                        <stop offset="60%" stop-color="#808080"/>
-                        <stop offset="80%" stop-color="#c0c0c0"/>
-                        <stop offset="100%" stop-color="#ffffff"/>
-                    </linearGradient>
-                    <!-- Subtle inner glow -->
-                    <filter id="inner-glow" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
-                        <feOffset in="blur" dx="0" dy="0" result="offsetBlur"/>
-                        <feFlood flood-color="#00ffff" flood-opacity="0.5"/>
-                        <feComposite in2="offsetBlur" operator="in"/>
-                        <feMerge>
-                            <feMergeNode/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                <!--
-                    NIM Wordmark - Geometric, angular, inspired by:
-                    - NASA "worm" logo (bold, confident strokes)
-                    - DMC DeLorean (angular cuts, chrome feel)
-                    - 80s tech aesthetics (clean precision)
-                -->
-                <g fill="url(#chrome)" filter="url(#inner-glow)">
-                    <!-- N - Bold with diagonal crossbar and angled cuts -->
-                    <path d="
-                        M 0 100
-                        L 0 8
-                        L 8 0
-                        L 24 0
-                        L 24 58
-                        L 56 0
-                        L 80 0
-                        L 80 92
-                        L 72 100
-                        L 56 100
-                        L 56 42
-                        L 24 100
-                        Z
-                    "/>
-                    <!-- I - Monolithic bar with angled terminals -->
-                    <path d="
-                        M 108 100
-                        L 108 8
-                        L 116 0
-                        L 148 0
-                        L 148 92
-                        L 140 100
-                        Z
-                    "/>
-                    <!-- M - Twin peaks with angular precision -->
-                    <path d="
-                        M 176 100
-                        L 176 8
-                        L 184 0
-                        L 208 0
-                        L 232 50
-                        L 256 0
-                        L 280 0
-                        L 288 8
-                        L 288 100
-                        L 264 100
-                        L 264 45
-                        L 240 92
-                        L 224 92
-                        L 200 45
-                        L 200 100
-                        Z
-                    "/>
+            <!-- NIM Logo - Clean, elegant strokes -->
+            <svg id="nim-logo" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#ffffff">
+                    <!-- N - Clean diagonal -->
+                    <path d="M 0 100 L 0 0 L 14 0 L 14 65 L 52 0 L 68 0 L 68 100 L 54 100 L 54 35 L 16 100 Z"/>
+                    <!-- I - Simple bar -->
+                    <path d="M 96 100 L 96 0 L 110 0 L 110 100 Z"/>
+                    <!-- M - Elegant peaks -->
+                    <path d="M 138 100 L 138 0 L 154 0 L 175 55 L 196 0 L 212 0 L 212 100 L 198 100 L 198 40 L 182 85 L 168 85 L 152 40 L 152 100 Z"/>
                 </g>
             </svg>
 
             <!-- Glitch layers -->
-            <svg class="glitch-layer" id="glitch-cyan" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
+            <svg class="glitch-layer" id="glitch-cyan" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg">
                 <g fill="#00ffff">
-                    <path d="M 0 100 L 0 8 L 8 0 L 24 0 L 24 58 L 56 0 L 80 0 L 80 92 L 72 100 L 56 100 L 56 42 L 24 100 Z"/>
-                    <path d="M 108 100 L 108 8 L 116 0 L 148 0 L 148 92 L 140 100 Z"/>
-                    <path d="M 176 100 L 176 8 L 184 0 L 208 0 L 232 50 L 256 0 L 280 0 L 288 8 L 288 100 L 264 100 L 264 45 L 240 92 L 224 92 L 200 45 L 200 100 Z"/>
+                    <path d="M 0 100 L 0 0 L 14 0 L 14 65 L 52 0 L 68 0 L 68 100 L 54 100 L 54 35 L 16 100 Z"/>
+                    <path d="M 96 100 L 96 0 L 110 0 L 110 100 Z"/>
+                    <path d="M 138 100 L 138 0 L 154 0 L 175 55 L 196 0 L 212 0 L 212 100 L 198 100 L 198 40 L 182 85 L 168 85 L 152 40 L 152 100 Z"/>
                 </g>
             </svg>
 
-            <svg class="glitch-layer" id="glitch-magenta" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
+            <svg class="glitch-layer" id="glitch-magenta" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg">
                 <g fill="#ff00ff">
-                    <path d="M 0 100 L 0 8 L 8 0 L 24 0 L 24 58 L 56 0 L 80 0 L 80 92 L 72 100 L 56 100 L 56 42 L 24 100 Z"/>
-                    <path d="M 108 100 L 108 8 L 116 0 L 148 0 L 148 92 L 140 100 Z"/>
-                    <path d="M 176 100 L 176 8 L 184 0 L 208 0 L 232 50 L 256 0 L 280 0 L 288 8 L 288 100 L 264 100 L 264 45 L 240 92 L 224 92 L 200 45 L 200 100 Z"/>
+                    <path d="M 0 100 L 0 0 L 14 0 L 14 65 L 52 0 L 68 0 L 68 100 L 54 100 L 54 35 L 16 100 Z"/>
+                    <path d="M 96 100 L 96 0 L 110 0 L 110 100 Z"/>
+                    <path d="M 138 100 L 138 0 L 154 0 L 175 55 L 196 0 L 212 0 L 212 100 L 198 100 L 198 40 L 182 85 L 168 85 L 152 40 L 152 100 Z"/>
                 </g>
             </svg>
         </div>
