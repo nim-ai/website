@@ -7,8 +7,6 @@
     <meta name="theme-color" content="#0a0a0f">
     <title>NIM</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +18,6 @@
             height: 100%;
             overflow: hidden;
             background: #0a0a0f;
-            font-family: 'Orbitron', sans-serif;
         }
 
         /* Main container */
@@ -54,133 +51,101 @@
             opacity: 0.3;
         }
 
-        /* The sacred text */
+        /* The sacred text container */
         #nim-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
-            text-align: center;
             pointer-events: none;
         }
 
-        #nim {
-            font-size: clamp(80px, 20vw, 300px);
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            background: linear-gradient(
-                180deg,
-                #ffffff 0%,
-                #a0a0a0 25%,
-                #ffffff 50%,
-                #606060 75%,
-                #ffffff 100%
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* SVG Logo */
+        #nim-logo {
+            width: clamp(200px, 50vw, 600px);
+            height: auto;
             filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))
                     drop-shadow(0 0 20px rgba(255, 0, 255, 0.3))
                     drop-shadow(0 0 40px rgba(139, 0, 255, 0.2));
-            animation: nim-breathe 4s ease-in-out infinite, nim-flicker 0.1s ease-in-out infinite;
-            text-shadow:
-                0 0 10px rgba(0, 255, 255, 0.8),
-                0 0 20px rgba(0, 255, 255, 0.6),
-                0 0 30px rgba(0, 255, 255, 0.4),
-                0 0 40px rgba(255, 0, 255, 0.3);
+            animation: nim-breathe 4s ease-in-out infinite;
         }
 
         @keyframes nim-breathe {
             0%, 100% {
                 opacity: 0.9;
                 transform: scale(1);
+                filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))
+                        drop-shadow(0 0 20px rgba(255, 0, 255, 0.3))
+                        drop-shadow(0 0 40px rgba(139, 0, 255, 0.2));
             }
             50% {
                 opacity: 1;
                 transform: scale(1.02);
+                filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.7))
+                        drop-shadow(0 0 30px rgba(255, 0, 255, 0.5))
+                        drop-shadow(0 0 60px rgba(139, 0, 255, 0.3));
             }
         }
 
-        @keyframes nim-flicker {
-            0%, 100% { opacity: 0.97; }
-            50% { opacity: 1; }
-        }
-
         /* Glitch layers */
-        #nim-glitch {
+        .glitch-layer {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: clamp(80px, 20vw, 300px);
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: transparent;
-            z-index: 9;
+            width: clamp(200px, 50vw, 600px);
+            height: auto;
             pointer-events: none;
-        }
-
-        #nim-glitch::before,
-        #nim-glitch::after {
-            content: 'NIM';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #ff00ff 0%, #00ffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             opacity: 0;
         }
 
-        #nim-glitch::before {
-            animation: glitch-1 3s ease-in-out infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        #glitch-cyan {
+            animation: glitch-1 4s ease-in-out infinite;
         }
 
-        #nim-glitch::after {
-            animation: glitch-2 3s ease-in-out infinite;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+        #glitch-magenta {
+            animation: glitch-2 4s ease-in-out infinite;
         }
 
         @keyframes glitch-1 {
-            0%, 90%, 100% {
+            0%, 88%, 100% {
                 opacity: 0;
-                transform: translate(0, 0);
+                transform: translate(-50%, -50%);
+            }
+            90% {
+                opacity: 0.8;
+                transform: translate(calc(-50% - 8px), calc(-50% - 3px));
             }
             92% {
-                opacity: 0.8;
-                transform: translate(-5px, -2px);
+                opacity: 0;
+                transform: translate(calc(-50% + 6px), calc(-50% + 2px));
             }
             94% {
-                opacity: 0;
-                transform: translate(5px, 2px);
+                opacity: 0.6;
+                transform: translate(calc(-50% - 4px), calc(-50% + 1px));
             }
             96% {
-                opacity: 0.6;
-                transform: translate(-3px, 1px);
+                opacity: 0;
             }
         }
 
         @keyframes glitch-2 {
-            0%, 90%, 100% {
+            0%, 89%, 100% {
                 opacity: 0;
-                transform: translate(0, 0);
+                transform: translate(-50%, -50%);
             }
             91% {
                 opacity: 0.6;
-                transform: translate(3px, 1px);
+                transform: translate(calc(-50% + 5px), calc(-50% + 2px));
             }
             93% {
                 opacity: 0.8;
-                transform: translate(-4px, -1px);
+                transform: translate(calc(-50% - 6px), calc(-50% - 2px));
             }
             95% {
                 opacity: 0;
-                transform: translate(2px, -2px);
+                transform: translate(calc(-50% + 3px), calc(-50% - 1px));
             }
         }
 
@@ -233,32 +198,6 @@
             50% { opacity: 0.03; }
         }
 
-        /* Floating geometric shapes */
-        .geo-shape {
-            position: absolute;
-            pointer-events: none;
-            z-index: 2;
-            opacity: 0;
-            animation: geo-float 20s ease-in-out infinite;
-        }
-
-        @keyframes geo-float {
-            0%, 100% {
-                opacity: 0;
-                transform: translateY(0) rotate(0deg);
-            }
-            10% {
-                opacity: 0.1;
-            }
-            50% {
-                opacity: 0.15;
-                transform: translateY(-50px) rotate(180deg);
-            }
-            90% {
-                opacity: 0.1;
-            }
-        }
-
         /* Pulse ring effect */
         #pulse-ring {
             position: absolute;
@@ -271,6 +210,7 @@
             border-radius: 50%;
             z-index: 5;
             animation: pulse-expand 4s ease-out infinite;
+            pointer-events: none;
         }
 
         #pulse-ring::before,
@@ -342,8 +282,101 @@
         <div id="light-leak"></div>
         <div id="pulse-ring"></div>
         <div id="nim-container">
-            <div id="nim">NIM</div>
-            <div id="nim-glitch"></div>
+            <!-- Main NIM Logo - NASA/DMC inspired geometric wordmark -->
+            <svg id="nim-logo" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Chrome gradient for main logo -->
+                    <linearGradient id="chrome" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff"/>
+                        <stop offset="20%" stop-color="#c0c0c0"/>
+                        <stop offset="40%" stop-color="#ffffff"/>
+                        <stop offset="60%" stop-color="#808080"/>
+                        <stop offset="80%" stop-color="#c0c0c0"/>
+                        <stop offset="100%" stop-color="#ffffff"/>
+                    </linearGradient>
+                    <!-- Subtle inner glow -->
+                    <filter id="inner-glow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+                        <feOffset in="blur" dx="0" dy="0" result="offsetBlur"/>
+                        <feFlood flood-color="#00ffff" flood-opacity="0.5"/>
+                        <feComposite in2="offsetBlur" operator="in"/>
+                        <feMerge>
+                            <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                <!--
+                    NIM Wordmark - Geometric, angular, inspired by:
+                    - NASA "worm" logo (bold, confident strokes)
+                    - DMC DeLorean (angular cuts, chrome feel)
+                    - 80s tech aesthetics (clean precision)
+                -->
+                <g fill="url(#chrome)" filter="url(#inner-glow)">
+                    <!-- N - Bold with diagonal crossbar and angled cuts -->
+                    <path d="
+                        M 0 100
+                        L 0 8
+                        L 8 0
+                        L 24 0
+                        L 24 58
+                        L 56 0
+                        L 80 0
+                        L 80 92
+                        L 72 100
+                        L 56 100
+                        L 56 42
+                        L 24 100
+                        Z
+                    "/>
+                    <!-- I - Monolithic bar with angled terminals -->
+                    <path d="
+                        M 108 100
+                        L 108 8
+                        L 116 0
+                        L 148 0
+                        L 148 92
+                        L 140 100
+                        Z
+                    "/>
+                    <!-- M - Twin peaks with angular precision -->
+                    <path d="
+                        M 176 100
+                        L 176 8
+                        L 184 0
+                        L 208 0
+                        L 232 50
+                        L 256 0
+                        L 280 0
+                        L 288 8
+                        L 288 100
+                        L 264 100
+                        L 264 45
+                        L 240 92
+                        L 224 92
+                        L 200 45
+                        L 200 100
+                        Z
+                    "/>
+                </g>
+            </svg>
+
+            <!-- Glitch layers -->
+            <svg class="glitch-layer" id="glitch-cyan" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#00ffff">
+                    <path d="M 0 100 L 0 8 L 8 0 L 24 0 L 24 58 L 56 0 L 80 0 L 80 92 L 72 100 L 56 100 L 56 42 L 24 100 Z"/>
+                    <path d="M 108 100 L 108 8 L 116 0 L 148 0 L 148 92 L 140 100 Z"/>
+                    <path d="M 176 100 L 176 8 L 184 0 L 208 0 L 232 50 L 256 0 L 280 0 L 288 8 L 288 100 L 264 100 L 264 45 L 240 92 L 224 92 L 200 45 L 200 100 Z"/>
+                </g>
+            </svg>
+
+            <svg class="glitch-layer" id="glitch-magenta" viewBox="0 0 340 100" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#ff00ff">
+                    <path d="M 0 100 L 0 8 L 8 0 L 24 0 L 24 58 L 56 0 L 80 0 L 80 92 L 72 100 L 56 100 L 56 42 L 24 100 Z"/>
+                    <path d="M 108 100 L 108 8 L 116 0 L 148 0 L 148 92 L 140 100 Z"/>
+                    <path d="M 176 100 L 176 8 L 184 0 L 208 0 L 232 50 L 256 0 L 280 0 L 288 8 L 288 100 L 264 100 L 264 45 L 240 92 L 224 92 L 200 45 L 200 100 Z"/>
+                </g>
+            </svg>
         </div>
     </div>
     <div id="chromatic"></div>
