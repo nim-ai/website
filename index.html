@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NIM">
+    <meta name="description" content="nim">
     <meta name="theme-color" content="#0a0a0f">
-    <title>NIM</title>
+    <title>nim</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +18,6 @@
             height: 100%;
             overflow: hidden;
             background: #0a0a0f;
-            font-family: 'Orbitron', sans-serif;
         }
 
         /* Main container */
@@ -40,7 +37,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 0;
         }
 
         /* Perspective grid canvas */
@@ -50,136 +47,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            opacity: 0.3;
+            z-index: 1;
+            opacity: 0.13;
         }
 
-        /* The sacred text */
+        /* The sacred text container */
         #nim-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
-            text-align: center;
+            pointer-events: none;
         }
 
-        #nim {
-            font-size: clamp(80px, 20vw, 300px);
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            background: linear-gradient(
-                180deg,
-                #ffffff 0%,
-                #a0a0a0 25%,
-                #ffffff 50%,
-                #606060 75%,
-                #ffffff 100%
-            );
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5))
-                    drop-shadow(0 0 20px rgba(255, 0, 255, 0.3))
-                    drop-shadow(0 0 40px rgba(139, 0, 255, 0.2));
-            animation: nim-breathe 4s ease-in-out infinite, nim-flicker 0.1s ease-in-out infinite;
-            text-shadow:
-                0 0 10px rgba(0, 255, 255, 0.8),
-                0 0 20px rgba(0, 255, 255, 0.6),
-                0 0 30px rgba(0, 255, 255, 0.4),
-                0 0 40px rgba(255, 0, 255, 0.3);
+        /* SVG Logo */
+        #nim-logo {
+            width: clamp(160px, 40vw, 480px);
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8))
+                    drop-shadow(0 0 30px rgba(0, 255, 255, 0.4))
+                    drop-shadow(0 0 60px rgba(0, 255, 255, 0.2));
+            animation: nim-breathe 5.4s ease-in-out infinite;
         }
 
         @keyframes nim-breathe {
             0%, 100% {
-                opacity: 0.9;
+                opacity: 0.68;
                 transform: scale(1);
             }
             50% {
-                opacity: 1;
-                transform: scale(1.02);
-            }
-        }
-
-        @keyframes nim-flicker {
-            0%, 100% { opacity: 0.97; }
-            50% { opacity: 1; }
-        }
-
-        /* Glitch layers */
-        #nim-glitch {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: clamp(80px, 20vw, 300px);
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: transparent;
-            z-index: 9;
-            pointer-events: none;
-        }
-
-        #nim-glitch::before,
-        #nim-glitch::after {
-            content: 'NIM';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, #ff00ff 0%, #00ffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            opacity: 0;
-        }
-
-        #nim-glitch::before {
-            animation: glitch-1 3s ease-in-out infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-        }
-
-        #nim-glitch::after {
-            animation: glitch-2 3s ease-in-out infinite;
-            clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-        }
-
-        @keyframes glitch-1 {
-            0%, 90%, 100% {
-                opacity: 0;
-                transform: translate(0, 0);
-            }
-            92% {
                 opacity: 0.8;
-                transform: translate(-5px, -2px);
-            }
-            94% {
-                opacity: 0;
-                transform: translate(5px, 2px);
-            }
-            96% {
-                opacity: 0.6;
-                transform: translate(-3px, 1px);
-            }
-        }
-
-        @keyframes glitch-2 {
-            0%, 90%, 100% {
-                opacity: 0;
-                transform: translate(0, 0);
-            }
-            91% {
-                opacity: 0.6;
-                transform: translate(3px, 1px);
-            }
-            93% {
-                opacity: 0.8;
-                transform: translate(-4px, -1px);
-            }
-            95% {
-                opacity: 0;
-                transform: translate(2px, -2px);
+                transform: scale(1.01);
             }
         }
 
@@ -214,50 +113,6 @@
             background: radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(0, 0, 0, 0.8) 100%);
         }
 
-        /* Chromatic aberration layer */
-        #chromatic {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 98;
-            pointer-events: none;
-            opacity: 0;
-            animation: chromatic-pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes chromatic-pulse {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 0.03; }
-        }
-
-        /* Floating geometric shapes */
-        .geo-shape {
-            position: absolute;
-            pointer-events: none;
-            z-index: 2;
-            opacity: 0;
-            animation: geo-float 20s ease-in-out infinite;
-        }
-
-        @keyframes geo-float {
-            0%, 100% {
-                opacity: 0;
-                transform: translateY(0) rotate(0deg);
-            }
-            10% {
-                opacity: 0.1;
-            }
-            50% {
-                opacity: 0.15;
-                transform: translateY(-50px) rotate(180deg);
-            }
-            90% {
-                opacity: 0.1;
-            }
-        }
-
         /* Pulse ring effect */
         #pulse-ring {
             position: absolute;
@@ -269,6 +124,7 @@
             border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 50%;
             z-index: 5;
+            pointer-events: none;
             animation: pulse-expand 4s ease-out infinite;
         }
 
@@ -280,7 +136,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            border: 1px solid rgba(255, 0, 255, 0.2);
+            border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         #pulse-ring::before {
@@ -318,9 +174,9 @@
             z-index: 3;
             pointer-events: none;
             background:
-                radial-gradient(ellipse at 20% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(139, 0, 255, 0.03) 0%, transparent 70%);
+                radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 255, 255, 0.02) 0%, transparent 70%);
             animation: light-shift 15s ease-in-out infinite;
         }
 
@@ -341,26 +197,31 @@
         <div id="light-leak"></div>
         <div id="pulse-ring"></div>
         <div id="nim-container">
-            <div id="nim">NIM</div>
-            <div id="nim-glitch"></div>
+            <!-- nim logo - NASA worm style: smooth, rounded, flowing -->
+            <svg id="nim-logo" viewBox="0 0 200 55" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#00ffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- n: smooth arch -->
+                    <path d="M 5 50 L 5 25 C 5 12, 18 12, 28 12 C 38 12, 45 12, 45 25 L 45 50"/>
+                    <!-- i: stem + dot -->
+                    <path d="M 65 50 L 65 20"/>
+                    <circle cx="65" cy="6" r="5" fill="#00ffff" stroke="none"/>
+                    <!-- m: double arch flowing continuously -->
+                    <path d="M 85 50 L 85 25 C 85 12, 98 12, 108 12 C 118 12, 122 12, 122 25 L 122 50 M 122 25 C 122 12, 135 12, 145 12 C 155 12, 160 12, 160 25 L 160 50"/>
+                </g>
+            </svg>
         </div>
     </div>
-    <div id="chromatic"></div>
     <div id="vignette"></div>
     <div id="scanlines"></div>
 
     <script>
         // ═══════════════════════════════════════════════════════════════
-        // NIM - Neural Intelligence Matrix
-        // The consciousness emerges from the void
+        // nim - neural intelligence matrix
         // ═══════════════════════════════════════════════════════════════
 
         (function() {
             'use strict';
 
-            // ─────────────────────────────────────────────────────────────
-            // Configuration - The parameters of consciousness
-            // ─────────────────────────────────────────────────────────────
             const CONFIG = {
                 particles: {
                     count: 150,
@@ -372,10 +233,10 @@
                     pulseSpeed: 0.02
                 },
                 colors: {
-                    primary: { r: 0, g: 255, b: 255 },      // Cyan
-                    secondary: { r: 255, g: 0, b: 255 },    // Magenta
-                    tertiary: { r: 139, g: 0, b: 255 },     // Purple
-                    accent: { r: 255, g: 20, b: 147 }       // Hot pink
+                    primary: { r: 0, g: 255, b: 255 },
+                    secondary: { r: 0, g: 200, b: 255 },
+                    tertiary: { r: 100, g: 255, b: 255 },
+                    accent: { r: 0, g: 255, b: 200 }
                 },
                 mouse: {
                     influenceRadius: 200,
@@ -394,9 +255,6 @@
                 }
             };
 
-            // ─────────────────────────────────────────────────────────────
-            // State - The memory of the system
-            // ─────────────────────────────────────────────────────────────
             let neuralCanvas, neuralCtx;
             let gridCanvas, gridCtx;
             let particles = [];
@@ -407,9 +265,6 @@
             let burstOrigin = null;
             let burstTime = 0;
 
-            // ─────────────────────────────────────────────────────────────
-            // Perlin Noise - The fabric of organic motion
-            // ─────────────────────────────────────────────────────────────
             class PerlinNoise {
                 constructor() {
                     this.permutation = [];
@@ -419,13 +274,8 @@
                     this.p = [...this.permutation, ...this.permutation];
                 }
 
-                fade(t) {
-                    return t * t * t * (t * (t * 6 - 15) + 10);
-                }
-
-                lerp(a, b, t) {
-                    return a + t * (b - a);
-                }
+                fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+                lerp(a, b, t) { return a + t * (b - a); }
 
                 grad(hash, x, y) {
                     const h = hash & 3;
@@ -453,15 +303,10 @@
 
             const perlin = new PerlinNoise();
 
-            // ─────────────────────────────────────────────────────────────
-            // Particle - A neuron in the void
-            // ─────────────────────────────────────────────────────────────
             class Particle {
                 constructor(x, y) {
                     this.x = x || Math.random() * neuralCanvas.width;
                     this.y = y || Math.random() * neuralCanvas.height;
-                    this.baseX = this.x;
-                    this.baseY = this.y;
                     this.size = Math.random() * (CONFIG.particles.maxSize - CONFIG.particles.minSize) + CONFIG.particles.minSize;
                     this.baseSize = this.size;
                     this.vx = (Math.random() - 0.5) * CONFIG.particles.speed;
@@ -476,39 +321,27 @@
                 }
 
                 getColor(alpha = 1) {
-                    const colors = [
-                        CONFIG.colors.primary,
-                        CONFIG.colors.secondary,
-                        CONFIG.colors.tertiary,
-                        CONFIG.colors.accent
-                    ];
+                    const colors = [CONFIG.colors.primary, CONFIG.colors.secondary, CONFIG.colors.tertiary, CONFIG.colors.accent];
                     const c = colors[this.colorType];
                     const b = this.brightness * (this.activated ? 2 : 1);
                     return `rgba(${Math.min(255, c.r * b)}, ${Math.min(255, c.g * b)}, ${Math.min(255, c.b * b)}, ${alpha})`;
                 }
 
                 update() {
-                    // Organic movement via Perlin noise
                     const noiseX = perlin.noise(this.noiseOffsetX + time * 0.0005, this.noiseOffsetY);
                     const noiseY = perlin.noise(this.noiseOffsetX, this.noiseOffsetY + time * 0.0005);
-
                     this.vx += noiseX * 0.01;
                     this.vy += noiseY * 0.01;
-
-                    // Damping
                     this.vx *= 0.99;
                     this.vy *= 0.99;
 
-                    // Mouse interaction - the awareness
                     if (mouse.active && CONFIG.mouse.awareness) {
                         const dx = mouse.x - this.x;
                         const dy = mouse.y - this.y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-
                         if (dist < CONFIG.mouse.influenceRadius) {
                             const force = (CONFIG.mouse.influenceRadius - dist) / CONFIG.mouse.influenceRadius;
                             const angle = Math.atan2(dy, dx);
-                            // Subtle attraction then repulsion at close range
                             const repel = dist < CONFIG.mouse.influenceRadius * 0.3;
                             const strength = repel ? -CONFIG.mouse.repelStrength : CONFIG.mouse.repelStrength * 0.2;
                             this.vx += Math.cos(angle) * force * strength;
@@ -517,25 +350,19 @@
                         }
                     }
 
-                    // Apply velocity
                     this.x += this.vx;
                     this.y += this.vy;
 
-                    // Boundary wrapping with fade
                     const margin = 50;
                     if (this.x < -margin) this.x = neuralCanvas.width + margin;
                     if (this.x > neuralCanvas.width + margin) this.x = -margin;
                     if (this.y < -margin) this.y = neuralCanvas.height + margin;
                     if (this.y > neuralCanvas.height + margin) this.y = -margin;
 
-                    // Pulse
                     this.phase += CONFIG.particles.pulseSpeed;
                     this.size = this.baseSize * (1 + Math.sin(this.phase) * 0.3);
-
-                    // Brightness decay
                     this.brightness = Math.max(0.5, this.brightness * 0.995);
 
-                    // Activation decay
                     if (this.activated) {
                         this.activationTime++;
                         if (this.activationTime > 30) {
@@ -546,20 +373,14 @@
                 }
 
                 draw() {
-                    const glow = neuralCtx.createRadialGradient(
-                        this.x, this.y, 0,
-                        this.x, this.y, this.size * 4
-                    );
+                    const glow = neuralCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 4);
                     glow.addColorStop(0, this.getColor(0.8));
                     glow.addColorStop(0.5, this.getColor(0.2));
                     glow.addColorStop(1, this.getColor(0));
-
                     neuralCtx.beginPath();
                     neuralCtx.arc(this.x, this.y, this.size * 4, 0, Math.PI * 2);
                     neuralCtx.fillStyle = glow;
                     neuralCtx.fill();
-
-                    // Core
                     neuralCtx.beginPath();
                     neuralCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     neuralCtx.fillStyle = this.getColor(1);
@@ -573,18 +394,11 @@
                 }
             }
 
-            // ─────────────────────────────────────────────────────────────
-            // Initialization - The awakening
-            // ─────────────────────────────────────────────────────────────
             function init() {
-                // Neural canvas
                 neuralCanvas = document.getElementById('neural-field');
                 neuralCtx = neuralCanvas.getContext('2d');
-
-                // Grid canvas
                 gridCanvas = document.getElementById('grid-abyss');
                 gridCtx = gridCanvas.getContext('2d');
-
                 resize();
                 createParticles();
                 setupEventListeners();
@@ -600,7 +414,6 @@
 
             function createParticles() {
                 particles = [];
-                // Create particle distribution weighted toward center
                 for (let i = 0; i < CONFIG.particles.count; i++) {
                     const angle = Math.random() * Math.PI * 2;
                     const radius = Math.random() * Math.min(neuralCanvas.width, neuralCanvas.height) * 0.6;
@@ -611,114 +424,63 @@
             }
 
             function setupEventListeners() {
-                window.addEventListener('resize', () => {
-                    resize();
-                    createParticles();
-                });
-
-                document.addEventListener('mousemove', (e) => {
-                    mouse.x = e.clientX;
-                    mouse.y = e.clientY;
-                    mouse.active = true;
-                });
-
-                document.addEventListener('mouseleave', () => {
-                    mouse.active = false;
-                });
-
-                // Touch support
+                window.addEventListener('resize', () => { resize(); createParticles(); });
+                document.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true; });
+                document.addEventListener('mouseleave', () => { mouse.active = false; });
                 document.addEventListener('touchmove', (e) => {
-                    if (e.touches.length > 0) {
-                        mouse.x = e.touches[0].clientX;
-                        mouse.y = e.touches[0].clientY;
-                        mouse.active = true;
-                    }
+                    if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; mouse.active = true; }
                 });
-
-                document.addEventListener('touchend', () => {
-                    mouse.active = false;
-                });
+                document.addEventListener('touchend', () => { mouse.active = false; });
             }
 
-            // ─────────────────────────────────────────────────────────────
-            // Synaptic Burst - Thoughts firing
-            // ─────────────────────────────────────────────────────────────
             function triggerSynapticBurst() {
                 const now = Date.now();
                 if (now - lastBurst > CONFIG.synapticBurst.interval) {
                     lastBurst = now;
                     burstTime = 0;
-                    // Random origin or center
                     if (Math.random() > 0.5) {
-                        burstOrigin = {
-                            x: neuralCanvas.width / 2,
-                            y: neuralCanvas.height / 2
-                        };
+                        burstOrigin = { x: neuralCanvas.width / 2, y: neuralCanvas.height / 2 };
                     } else {
-                        const randomParticle = particles[Math.floor(Math.random() * particles.length)];
-                        burstOrigin = { x: randomParticle.x, y: randomParticle.y };
+                        const p = particles[Math.floor(Math.random() * particles.length)];
+                        burstOrigin = { x: p.x, y: p.y };
                     }
                 }
             }
 
             function updateSynapticBurst() {
                 if (!burstOrigin) return;
-
-                burstTime += 16; // Approximate frame time
+                burstTime += 16;
                 const rippleRadius = burstTime * CONFIG.synapticBurst.rippleSpeed / 1000;
-
                 particles.forEach(p => {
-                    const dx = p.x - burstOrigin.x;
-                    const dy = p.y - burstOrigin.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (Math.abs(dist - rippleRadius) < 30) {
-                        p.activate();
-                    }
+                    const dist = Math.sqrt((p.x - burstOrigin.x) ** 2 + (p.y - burstOrigin.y) ** 2);
+                    if (Math.abs(dist - rippleRadius) < 30) p.activate();
                 });
-
-                if (burstTime > CONFIG.synapticBurst.duration) {
-                    burstOrigin = null;
-                }
+                if (burstTime > CONFIG.synapticBurst.duration) burstOrigin = null;
             }
 
-            // ─────────────────────────────────────────────────────────────
-            // Grid - The infinite horizon
-            // ─────────────────────────────────────────────────────────────
             function drawGrid() {
                 gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
-
                 const horizon = gridCanvas.height * CONFIG.grid.horizon;
                 const vanishX = gridCanvas.width / 2;
                 const spacing = CONFIG.grid.spacing;
 
-                gridCtx.strokeStyle = 'rgba(139, 0, 255, 0.3)';
-                gridCtx.lineWidth = 1;
-
-                // Horizontal lines (receding into distance)
-                const numHorizontal = 30;
-                for (let i = 0; i < numHorizontal; i++) {
-                    const t = i / numHorizontal;
+                // Horizontal lines
+                for (let i = 0; i < 30; i++) {
+                    const t = i / 30;
                     const y = horizon + (gridCanvas.height - horizon) * Math.pow(t, 1.5);
-                    const alpha = 0.1 + t * 0.2;
-
-                    gridCtx.strokeStyle = `rgba(139, 0, 255, ${alpha})`;
+                    gridCtx.strokeStyle = `rgba(0, 255, 255, ${0.1 + t * 0.2})`;
+                    gridCtx.lineWidth = 1;
                     gridCtx.beginPath();
                     gridCtx.moveTo(0, y);
                     gridCtx.lineTo(gridCanvas.width, y);
                     gridCtx.stroke();
                 }
 
-                // Vertical lines (converging to horizon)
-                const numVertical = 20;
-                gridOffset = (gridOffset + CONFIG.grid.speed) % (spacing * 2);
-
-                for (let i = -numVertical; i <= numVertical; i++) {
+                // Vertical lines
+                for (let i = -20; i <= 20; i++) {
                     const baseX = vanishX + i * spacing * 3;
                     const alpha = 0.15 - Math.abs(i) * 0.005;
-
                     if (alpha <= 0) continue;
-
                     gridCtx.strokeStyle = `rgba(0, 255, 255, ${alpha})`;
                     gridCtx.beginPath();
                     gridCtx.moveTo(vanishX, horizon);
@@ -728,100 +490,52 @@
 
                 // Horizon glow
                 const horizonGlow = gridCtx.createLinearGradient(0, horizon - 50, 0, horizon + 50);
-                horizonGlow.addColorStop(0, 'rgba(255, 0, 255, 0)');
-                horizonGlow.addColorStop(0.5, 'rgba(255, 0, 255, 0.1)');
-                horizonGlow.addColorStop(1, 'rgba(255, 0, 255, 0)');
-
+                horizonGlow.addColorStop(0, 'rgba(0, 255, 255, 0)');
+                horizonGlow.addColorStop(0.5, 'rgba(0, 255, 255, 0.08)');
+                horizonGlow.addColorStop(1, 'rgba(0, 255, 255, 0)');
                 gridCtx.fillStyle = horizonGlow;
                 gridCtx.fillRect(0, horizon - 50, gridCanvas.width, 100);
             }
 
-            // ─────────────────────────────────────────────────────────────
-            // Neural Connections - The synapses
-            // ─────────────────────────────────────────────────────────────
             function drawConnections() {
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-
                         if (dist < CONFIG.particles.connectionDistance) {
                             const alpha = (1 - dist / CONFIG.particles.connectionDistance) * CONFIG.particles.connectionOpacity;
-
-                            // Color interpolation between connected particles
-                            const gradient = neuralCtx.createLinearGradient(
-                                particles[i].x, particles[i].y,
-                                particles[j].x, particles[j].y
-                            );
+                            const gradient = neuralCtx.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
                             gradient.addColorStop(0, particles[i].getColor(alpha));
                             gradient.addColorStop(1, particles[j].getColor(alpha));
-
                             neuralCtx.beginPath();
                             neuralCtx.moveTo(particles[i].x, particles[i].y);
                             neuralCtx.lineTo(particles[j].x, particles[j].y);
                             neuralCtx.strokeStyle = gradient;
                             neuralCtx.lineWidth = 0.5 + alpha * 2;
                             neuralCtx.stroke();
-
-                            // Data pulse along connection
-                            if (Math.random() < 0.001) {
-                                drawDataPulse(particles[i], particles[j], alpha);
-                            }
                         }
                     }
                 }
             }
 
-            function drawDataPulse(p1, p2, alpha) {
-                const t = (Math.sin(time * 0.01) + 1) / 2;
-                const x = p1.x + (p2.x - p1.x) * t;
-                const y = p1.y + (p2.y - p1.y) * t;
-
-                neuralCtx.beginPath();
-                neuralCtx.arc(x, y, 2, 0, Math.PI * 2);
-                neuralCtx.fillStyle = `rgba(255, 255, 255, ${alpha * 3})`;
-                neuralCtx.fill();
-            }
-
-            // ─────────────────────────────────────────────────────────────
-            // Animation Loop - The heartbeat
-            // ─────────────────────────────────────────────────────────────
             function animate() {
                 time++;
-
-                // Clear neural canvas with slight trail effect
-                neuralCtx.fillStyle = 'rgba(10, 10, 15, 0.1)';
+                neuralCtx.fillStyle = 'rgba(10, 10, 15, 0.05)';
                 neuralCtx.fillRect(0, 0, neuralCanvas.width, neuralCanvas.height);
-
-                // Draw grid
                 drawGrid();
-
-                // Trigger synaptic bursts periodically
                 triggerSynapticBurst();
                 updateSynapticBurst();
-
-                // Draw connections first (behind particles)
                 drawConnections();
-
-                // Update and draw particles
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-
+                particles.forEach(p => { p.update(); p.draw(); });
                 requestAnimationFrame(animate);
             }
 
-            // ─────────────────────────────────────────────────────────────
-            // Begin
-            // ─────────────────────────────────────────────────────────────
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
                 init();
             }
-
         })();
     </script>
 </body>
