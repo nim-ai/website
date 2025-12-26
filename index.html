@@ -136,7 +136,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 0, 255, 0.2);
         }
 
         #pulse-ring::before {
@@ -174,9 +174,9 @@
             z-index: 3;
             pointer-events: none;
             background:
-                radial-gradient(ellipse at 20% 80%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.03) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(0, 255, 255, 0.02) 0%, transparent 70%);
+                radial-gradient(ellipse at 20% 80%, rgba(255, 0, 255, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 0, 255, 0.03) 0%, transparent 70%);
             animation: light-shift 15s ease-in-out infinite;
         }
 
@@ -225,19 +225,19 @@
 
             const CONFIG = {
                 particles: {
-                    count: 150,
+                    count: 80,
                     maxSize: 3,
                     minSize: 0.5,
-                    connectionDistance: 150,
+                    connectionDistance: 120,
                     connectionOpacity: 0.15,
                     speed: 0.3,
                     pulseSpeed: 0.02
                 },
                 colors: {
                     primary: { r: 0, g: 255, b: 255 },
-                    secondary: { r: 0, g: 200, b: 255 },
-                    tertiary: { r: 100, g: 255, b: 255 },
-                    accent: { r: 0, g: 255, b: 200 }
+                    secondary: { r: 255, g: 0, b: 255 },
+                    tertiary: { r: 139, g: 0, b: 255 },
+                    accent: { r: 255, g: 20, b: 147 }
                 },
                 mouse: {
                     influenceRadius: 200,
@@ -374,14 +374,12 @@
                 }
 
                 draw() {
-                    const glow = neuralCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 4);
-                    glow.addColorStop(0, this.getColor(0.8));
-                    glow.addColorStop(0.5, this.getColor(0.2));
-                    glow.addColorStop(1, this.getColor(0));
+                    // Simplified glow
                     neuralCtx.beginPath();
-                    neuralCtx.arc(this.x, this.y, this.size * 4, 0, Math.PI * 2);
-                    neuralCtx.fillStyle = glow;
+                    neuralCtx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+                    neuralCtx.fillStyle = this.getColor(0.15);
                     neuralCtx.fill();
+                    // Core
                     neuralCtx.beginPath();
                     neuralCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     neuralCtx.fillStyle = this.getColor(1);
@@ -465,11 +463,11 @@
                 const vanishX = gridCanvas.width / 2;
                 const spacing = CONFIG.grid.spacing;
 
-                // Horizontal lines
-                for (let i = 0; i < 30; i++) {
-                    const t = i / 30;
+                // Horizontal lines (purple)
+                for (let i = 0; i < 20; i++) {
+                    const t = i / 20;
                     const y = horizon + (gridCanvas.height - horizon) * Math.pow(t, 1.5);
-                    gridCtx.strokeStyle = `rgba(0, 255, 255, ${0.1 + t * 0.2})`;
+                    gridCtx.strokeStyle = `rgba(139, 0, 255, ${0.15 + t * 0.25})`;
                     gridCtx.lineWidth = 1;
                     gridCtx.beginPath();
                     gridCtx.moveTo(0, y);
@@ -477,10 +475,10 @@
                     gridCtx.stroke();
                 }
 
-                // Vertical lines
-                for (let i = -20; i <= 20; i++) {
+                // Vertical lines (cyan)
+                for (let i = -15; i <= 15; i++) {
                     const baseX = vanishX + i * spacing * 3;
-                    const alpha = 0.15 - Math.abs(i) * 0.005;
+                    const alpha = 0.18 - Math.abs(i) * 0.008;
                     if (alpha <= 0) continue;
                     gridCtx.strokeStyle = `rgba(0, 255, 255, ${alpha})`;
                     gridCtx.beginPath();
@@ -489,31 +487,31 @@
                     gridCtx.stroke();
                 }
 
-                // Horizon glow
+                // Horizon glow (magenta)
                 const horizonGlow = gridCtx.createLinearGradient(0, horizon - 50, 0, horizon + 50);
-                horizonGlow.addColorStop(0, 'rgba(0, 255, 255, 0)');
-                horizonGlow.addColorStop(0.5, 'rgba(0, 255, 255, 0.08)');
-                horizonGlow.addColorStop(1, 'rgba(0, 255, 255, 0)');
+                horizonGlow.addColorStop(0, 'rgba(255, 0, 255, 0)');
+                horizonGlow.addColorStop(0.5, 'rgba(255, 0, 255, 0.1)');
+                horizonGlow.addColorStop(1, 'rgba(255, 0, 255, 0)');
                 gridCtx.fillStyle = horizonGlow;
                 gridCtx.fillRect(0, horizon - 50, gridCanvas.width, 100);
             }
 
             function drawConnections() {
+                const maxDist = CONFIG.particles.connectionDistance;
+                const maxDistSq = maxDist * maxDist;
                 for (let i = 0; i < particles.length; i++) {
                     for (let j = i + 1; j < particles.length; j++) {
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < CONFIG.particles.connectionDistance) {
-                            const alpha = (1 - dist / CONFIG.particles.connectionDistance) * CONFIG.particles.connectionOpacity;
-                            const gradient = neuralCtx.createLinearGradient(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
-                            gradient.addColorStop(0, particles[i].getColor(alpha));
-                            gradient.addColorStop(1, particles[j].getColor(alpha));
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq < maxDistSq) {
+                            const dist = Math.sqrt(distSq);
+                            const alpha = (1 - dist / maxDist) * CONFIG.particles.connectionOpacity;
                             neuralCtx.beginPath();
                             neuralCtx.moveTo(particles[i].x, particles[i].y);
                             neuralCtx.lineTo(particles[j].x, particles[j].y);
-                            neuralCtx.strokeStyle = gradient;
-                            neuralCtx.lineWidth = 0.5 + alpha * 2;
+                            neuralCtx.strokeStyle = particles[i].getColor(alpha);
+                            neuralCtx.lineWidth = 1;
                             neuralCtx.stroke();
                         }
                     }
