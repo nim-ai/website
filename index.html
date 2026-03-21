@@ -211,9 +211,9 @@
             function updateAndDrawDots(t) {
                 for (let i = 0; i < streamDots.length; i++) {
                     const dot = streamDots[i];
-                    dot.x += dot.speed;
-                    if (dot.x > w + 10) {
-                        dot.x = -10;
+                    dot.x -= dot.speed;
+                    if (dot.x < -10) {
+                        dot.x = w + 10;
                         dot.waveIdx = Math.floor(Math.random() * waves.length);
                     }
 
