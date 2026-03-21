@@ -234,9 +234,7 @@
             function animate() {
                 time++;
 
-                // Fade trail
-                ctx.fillStyle = 'rgba(6, 6, 16, 0.12)';
-                ctx.fillRect(0, 0, w, h);
+                ctx.clearRect(0, 0, w, h);
 
                 // Draw waves
                 for (let i = 0; i < waves.length; i++) {
