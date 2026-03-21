@@ -44,6 +44,12 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 5s ease-in;
+        }
+
+        canvas.visible {
+            opacity: 1;
         }
 
         #nim-container {
@@ -282,9 +288,12 @@
             vid.addEventListener('canplaythrough', () => vid.classList.add('loaded'));
             if (vid.readyState >= 4) vid.classList.add('loaded');
 
-            // Fade in logo after a short delay
+            // Fade in logo and canvas together after a short delay
             const logo = document.getElementById('nim-logo');
-            setTimeout(() => logo.classList.add('visible'), 500);
+            setTimeout(() => {
+                logo.classList.add('visible');
+                canvas.classList.add('visible');
+            }, 500);
 
             // Init
             resize();
