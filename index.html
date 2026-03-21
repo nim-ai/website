@@ -126,22 +126,41 @@
             const forkCount = 3;
             const forkSpread = 0.6; // How much futures diverge
 
-            function drawWave(wave, t) {
-                const { amp, freq, speed, phase, color, opacity } = wave;
-                const timeOffset = t * speed;
+            // Cursor influence on wave Y position
+            function cursorDeflection(x, y) {
+                if (!mouse.active) return 0;
+                const dx = x - mouse.x;
+                const dy = y - mouse.y;
+                const distSq = dx * dx + dy * dy;
+                const radius = 180;
+                if (distSq > radius * radius) return 0;
+                const dist = Math.sqrt(distSq);
+                const force = (1 - dist / radius);
+                // Push wave away from cursor vertically
+                const direction = (y > mouse.y) ? 1 : -1;
+                return direction * force * force * 25;
+            }
 
-                // The "now" cursor sits at center
+            function waveY(x, wave, t) {
+                const { amp, freq, speed, phase } = wave;
+                const timeOffset = t * speed;
+                const normalizedX = x - cx;
+                return cy + Math.sin(normalizedX * freq + timeOffset + phase) * amp
+                           + Math.sin(normalizedX * freq * 1.7 + timeOffset * 0.7 + phase) * amp * 0.3;
+            }
+
+            function drawWave(wave, t) {
+                const { color, opacity } = wave;
                 const nowX = cx;
+                const step = 3;
 
                 // === PAST (left of center) - solid, confident ===
                 ctx.beginPath();
                 let firstPoint = true;
-                const step = 3;
 
                 for (let x = 0; x <= nowX; x += step) {
-                    const normalizedX = (x - nowX); // negative values = past
-                    const y = cy + Math.sin(normalizedX * freq + timeOffset + phase) * amp
-                                 + Math.sin(normalizedX * freq * 1.7 + timeOffset * 0.7 + phase) * amp * 0.3;
+                    let y = waveY(x, wave, t);
+                    y += cursorDeflection(x, y);
                     if (firstPoint) { ctx.moveTo(x, y); firstPoint = false; }
                     else ctx.lineTo(x, y);
                 }
@@ -157,46 +176,21 @@
                     firstPoint = true;
 
                     for (let x = nowX; x <= w; x += step) {
-                        const dist = x - nowX; // how far into future
-                        const normalizedX = dist;
-                        const divergence = forkOffset * (dist / (w - nowX)); // grows with distance
-                        const uncertainty = (dist / (w - nowX)); // 0 at now, 1 at edge
-
-                        const baseY = Math.sin(normalizedX * freq + timeOffset + phase) * amp
-                                     + Math.sin(normalizedX * freq * 1.7 + timeOffset * 0.7 + phase) * amp * 0.3;
-                        const forkY = divergence * amp * 1.5;
-                        const y = cy + baseY + forkY;
+                        const dist = x - nowX;
+                        const divergence = forkOffset * (dist / (w - nowX));
+                        const forkY = divergence * wave.amp * 1.5;
+                        let y = waveY(x, wave, t) + forkY;
+                        y += cursorDeflection(x, y);
 
                         if (firstPoint) { ctx.moveTo(x, y); firstPoint = false; }
                         else ctx.lineTo(x, y);
                     }
 
-                    // Fade out as uncertainty increases
                     const forkOpacity = opacity * (f === Math.floor(forkCount / 2) ? 0.7 : 0.3);
                     ctx.strokeStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${forkOpacity})`;
                     ctx.lineWidth = f === Math.floor(forkCount / 2) ? 1.2 : 0.7;
                     ctx.stroke();
                 }
-            }
-
-            // Draw the "now" cursor line
-            function drawNowLine(t) {
-                const pulse = 0.3 + Math.sin(t * 0.02) * 0.1;
-
-                // Vertical line at center
-                const grad = ctx.createLinearGradient(cx, cy - 120, cx, cy + 120);
-                grad.addColorStop(0, 'rgba(108, 140, 255, 0)');
-                grad.addColorStop(0.3, `rgba(108, 140, 255, ${pulse * 0.3})`);
-                grad.addColorStop(0.5, `rgba(108, 140, 255, ${pulse})`);
-                grad.addColorStop(0.7, `rgba(108, 140, 255, ${pulse * 0.3})`);
-                grad.addColorStop(1, 'rgba(108, 140, 255, 0)');
-
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(cx, cy - 120);
-                ctx.lineTo(cx, cy + 120);
-                ctx.stroke();
             }
 
             // Horizontal data stream - tiny dots flowing along the timeline
@@ -225,11 +219,9 @@
                     }
 
                     const wave = waves[dot.waveIdx];
-                    const relX = dot.x - cx;
-                    const y = cy + Math.sin(relX * wave.freq + t * wave.speed + wave.phase) * wave.amp
-                                  + Math.sin(relX * wave.freq * 1.7 + t * wave.speed * 0.7 + wave.phase) * wave.amp * 0.3;
+                    let y = waveY(dot.x, wave, t);
+                    y += cursorDeflection(dot.x, y);
 
-                    // Dots in the "future" zone get dimmer
                     const futureF = dot.x > cx ? Math.max(0.2, 1 - (dot.x - cx) / (w - cx)) : 1;
                     const alpha = dot.brightness * futureF * 0.6;
 
@@ -240,42 +232,6 @@
                 }
             }
 
-            // Subtle horizontal scan line that sweeps
-            function drawScanPulse(t) {
-                const period = 400; // frames per sweep
-                const progress = (t % period) / period;
-                const scanX = progress * w;
-                const width = 80;
-
-                const grad = ctx.createLinearGradient(scanX - width, 0, scanX + width, 0);
-                grad.addColorStop(0, 'rgba(108, 140, 255, 0)');
-                grad.addColorStop(0.5, 'rgba(108, 140, 255, 0.03)');
-                grad.addColorStop(1, 'rgba(108, 140, 255, 0)');
-
-                ctx.fillStyle = grad;
-                ctx.fillRect(scanX - width, 0, width * 2, h);
-            }
-
-            // Mouse interaction - ripple waves near cursor
-            function drawMouseRipple(t) {
-                if (!mouse.active) return;
-
-                const rippleAmp = 20;
-                ctx.beginPath();
-                for (let angle = 0; angle < Math.PI * 2; angle += 0.05) {
-                    const r = 30 + Math.sin(angle * 3 + t * 0.03) * rippleAmp * 0.3
-                                + Math.sin(angle * 5 - t * 0.02) * rippleAmp * 0.2;
-                    const x = mouse.x + Math.cos(angle) * r;
-                    const y = mouse.y + Math.sin(angle) * r;
-                    if (angle === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.closePath();
-                ctx.strokeStyle = 'rgba(108, 140, 255, 0.08)';
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
-            }
-
             function animate() {
                 time++;
 
@@ -283,22 +239,13 @@
                 ctx.fillStyle = 'rgba(6, 6, 16, 0.12)';
                 ctx.fillRect(0, 0, w, h);
 
-                // Scan pulse
-                drawScanPulse(time);
-
                 // Draw waves
                 for (let i = 0; i < waves.length; i++) {
                     drawWave(waves[i], time);
                 }
 
-                // Now cursor
-                drawNowLine(time);
-
                 // Streaming dots
                 updateAndDrawDots(time);
-
-                // Mouse interaction
-                drawMouseRipple(time);
 
                 requestAnimationFrame(animate);
             }
