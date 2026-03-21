@@ -126,19 +126,18 @@
             const forkCount = 3;
             const forkSpread = 0.6; // How much futures diverge
 
-            // Cursor influence on wave Y position
+            // Smooth cursor influence - gaussian falloff, proportional to vertical offset
             function cursorDeflection(x, y) {
                 if (!mouse.active) return 0;
                 const dx = x - mouse.x;
                 const dy = y - mouse.y;
                 const distSq = dx * dx + dy * dy;
-                const radius = 180;
+                const radius = 200;
                 if (distSq > radius * radius) return 0;
-                const dist = Math.sqrt(distSq);
-                const force = (1 - dist / radius);
-                // Push wave away from cursor vertically
-                const direction = (y > mouse.y) ? 1 : -1;
-                return direction * force * force * 25;
+                // Smooth gaussian-like falloff instead of linear
+                const falloff = Math.exp(-distSq / (radius * radius * 0.18));
+                // Push proportional to dy so it's smooth through center
+                return dy * falloff * 0.35;
             }
 
             function waveY(x, wave, t) {
