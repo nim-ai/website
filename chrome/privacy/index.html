@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#060610">
+    <meta name="description" content="nim for chrome's privacy policy: it decides on your computer and sends nothing anywhere.">
+    <title>Privacy policy, nim for chrome</title>
+    <link rel="stylesheet" href="/doc.css">
+</head>
+<body>
+<main>
+    <a class="mark" href="/" aria-label="nim.ai home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="50 -496 1152 516" role="img" aria-hidden="true"><path fill="#6C8CFF" d="M111 10h-11q-40 0-40-40v-353q0-29 20-49l33-33q20-20 49-20h124q29 0 49 21l32 32q20 20 20 49v353q0 40-40 40h-10q-40 0-40-40v-324q0-40-40-40h-66q-40 0-40 40v324q0 40-40 40m437-495h10q40 0 40 40v414q0 40-40 40h-10q-40 0-40-40v-414q0-40 40-40M769 8h-10q-40 0-40-40v-351q0-30 20-50l32-32q20-20 49-20h63q15 0 26.5 5t22.5 16q13 13 26 13 11 0 22-11l2-2q11-11 22.5-16t26.5-5h59q15 0 26.5 5t22.5 16l32 32q20 20 20 49v351q0 40-40 40h-10q-40 0-40-40v-322q0-40-40-40h-19q-40 0-40 40v322q0 40-40 40h-10q-40 0-40-40v-322q0-40-40-40h-23q-40 0-40 40v322q0 40-40 40"/></svg></a>
+
+    <h1>nim for chrome: privacy policy</h1>
+    <p class="dim">In effect from 8 November 2026. Covers the Chrome extension, version 1.1.0 and later.
+    <a href="/privacy/">nim.ai's policy</a> covers everything else.</p>
+
+    <div class="card">
+        <p><strong>The short version.</strong> nim for chrome reads the posts on the pages you visit and decides on
+        your computer whether each reads as AI slop. It sends nothing anywhere: no account, no analytics, no crash
+        reports, no update checks of its own.</p>
+    </div>
+
+    <h2>What it reads</h2>
+    <p>The text of posts, comments and replies on the pages you visit. The extension scores that text in your
+    browser, with its rule pack and a small style model that ship inside it, then drops it. Page text never leaves
+    your computer. The extension makes no network requests at all, and its content security policy lets its pages
+    load their own files and nothing else.</p>
+    <p>It stays off mail, banking and health sites and off local network addresses, and never reads those pages.</p>
+
+    <h2>What it keeps, on your computer only</h2>
+    <ul>
+        <li>Your settings.</li>
+        <li>Your corrections. "Not slop" and "Hide as slop" keep a hash of the post, not its words, and clear
+        themselves 90 days after you last changed them.</li>
+        <li>Sites you paused or set to hide completely, stored by name.</li>
+        <li>Authors you chose to always show, stored by name for that site.</li>
+        <li>The rule pack, and one count of what it has hidden since install.</li>
+    </ul>
+    <p>All of it lives in the extension's own storage. None of it syncs to your Google account or anywhere else.
+    Private windows write nothing to disk.</p>
+
+    <h2>Erasing it</h2>
+    <p>Open the extension's options, then Privacy, then Forget everything. That clears corrections, paused sites,
+    authors and the count, and leaves your settings and the rule pack. Removing the extension erases all of it.</p>
+
+    <h2>What it shares</h2>
+    <p>Nothing. The data isn't sold or transferred to anyone, isn't used for anything beyond deciding what to hide
+    or label, and isn't used to judge creditworthiness or for lending.</p>
+
+    <h2>Updates</h2>
+    <p>Chrome updates the extension from the Chrome Web Store the way it updates every extension. Google runs that
+    under its own <a href="https://policies.google.com/privacy">privacy policy</a>. The extension itself never
+    checks for updates or phones home.</p>
+
+    <h2>Changes</h2>
+    <p>If nim for chrome ever changes hands, these promises go with it. Any change to what it handles will be
+    announced in the store listing and in the extension before it takes effect, and this page will show the new
+    date.</p>
+
+    <h2>Contact</h2>
+    <p><a href="mailto:hello@nim.ai">hello@nim.ai</a></p>
+
+    <footer>
+        <a href="/">nim.ai</a><a href="/chrome/">nim for chrome</a><a href="/privacy/">nim.ai privacy</a>
+    </footer>
+</main>
+</body>
+</html>

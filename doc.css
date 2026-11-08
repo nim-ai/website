@@ -1,0 +1,68 @@
+/* Text pages on nim.ai, in the brand's tokens (../logo for the mark and color, nostra's style.css for the rest). */
+:root {
+    --accent: #6C8CFF;
+    --bg: #0F1117;
+    --bg-card: #1A1D27;
+    --border: #2A2E3E;
+    --text: #E1E4EC;
+    --text-dim: #9EA2B8;
+    --radius: 8px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { background: #060610; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #0a0e1a 0%, #060610 70%);
+    color: var(--text);
+    font: 16px/1.6 var(--font);
+}
+
+main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 72px;
+}
+
+.mark {
+    display: inline-block;
+    width: 72px;
+    margin-bottom: 32px;
+}
+
+.mark svg { display: block; width: 100%; height: auto; }
+
+h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+h2 { font-size: 20px; margin: 40px 0 8px; }
+p, ul { margin: 0 0 16px; }
+ul { padding-left: 22px; }
+li { margin-bottom: 6px; }
+
+.dim { color: var(--text-dim); }
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 24px 0;
+}
+
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+footer {
+    margin-top: 56px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+footer a { margin-right: 16px; }
